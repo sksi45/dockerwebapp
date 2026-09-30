@@ -14,16 +14,10 @@
     <packaging>war</packaging>
 
     <name>Devops Webapp</name>
-    <url>http://www.example.com</url>
-
-    <!-- ========================================================= -->
-    <!-- Properties                                                -->
-    <!-- ========================================================= -->
 
     <properties>
 
-        <!-- Application is still Java 8 compatible,
-             but Maven/Jenkins runs using Java 21 -->
+        <!-- Build with Java 21, generate Java 8 compatible bytecode -->
         <maven.compiler.release>8</maven.compiler.release>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -31,7 +25,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- Test dependencies -->
+        <!-- Testing -->
         <junit.version>4.13.2</junit.version>
         <mockito.version>5.18.0</mockito.version>
 
@@ -48,15 +42,9 @@
     </properties>
 
 
-    <!-- ========================================================= -->
-    <!-- Dependencies                                              -->
-    <!-- ========================================================= -->
-
     <dependencies>
 
-        <!-- ===================== -->
-        <!-- Spring                -->
-        <!-- ===================== -->
+        <!-- ==================== SPRING ==================== -->
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -114,9 +102,7 @@
         </dependency>
 
 
-        <!-- ===================== -->
-        <!-- Spring Security       -->
-        <!-- ===================== -->
+        <!-- ==================== SPRING SECURITY ==================== -->
 
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -137,9 +123,7 @@
         </dependency>
 
 
-        <!-- ===================== -->
-        <!-- Spring Data JPA       -->
-        <!-- ===================== -->
+        <!-- ==================== SPRING DATA ==================== -->
 
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -148,13 +132,18 @@
         </dependency>
 
 
-        <!-- ===================== -->
-        <!-- Hibernate             -->
-        <!-- ===================== -->
+        <!-- ==================== HIBERNATE ==================== -->
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
+            <version>4.3.11.Final</version>
+        </dependency>
+
+        <!-- Required by Spring 4.2 HibernateJpaVendorAdapter -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
             <version>4.3.11.Final</version>
         </dependency>
 
@@ -165,9 +154,7 @@
         </dependency>
 
 
-        <!-- ===================== -->
-        <!-- Database              -->
-        <!-- ===================== -->
+        <!-- ==================== DATABASE ==================== -->
 
         <dependency>
             <groupId>mysql</groupId>
@@ -182,9 +169,7 @@
         </dependency>
 
 
-        <!-- ===================== -->
-        <!-- Servlet / JSTL        -->
-        <!-- ===================== -->
+        <!-- ==================== SERVLET ==================== -->
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -200,9 +185,7 @@
         </dependency>
 
 
-        <!-- ===================== -->
-        <!-- Testing               -->
-        <!-- ===================== -->
+        <!-- ==================== TESTING ==================== -->
 
         <dependency>
             <groupId>junit</groupId>
@@ -211,9 +194,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- IMPORTANT:
-             Mockito 1.9.5 caused the Java 21 test failure.
-             Use Mockito 5.18.0. -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -229,9 +209,7 @@
         </dependency>
 
 
-        <!-- ===================== -->
-        <!-- Logging               -->
-        <!-- ===================== -->
+        <!-- ==================== LOGGING ==================== -->
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -240,9 +218,7 @@
         </dependency>
 
 
-        <!-- ===================== -->
-        <!-- Apache Commons        -->
-        <!-- ===================== -->
+        <!-- ==================== COMMON LIBRARIES ==================== -->
 
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -256,11 +232,6 @@
             <version>2.4</version>
         </dependency>
 
-
-        <!-- ===================== -->
-        <!-- Memcached             -->
-        <!-- ===================== -->
-
         <dependency>
             <groupId>net.spy</groupId>
             <artifactId>spymemcached</artifactId>
@@ -268,9 +239,7 @@
         </dependency>
 
 
-        <!-- ===================== -->
-        <!-- RabbitMQ              -->
-        <!-- ===================== -->
+        <!-- ==================== RABBITMQ ==================== -->
 
         <dependency>
             <groupId>org.springframework.amqp</groupId>
@@ -285,9 +254,7 @@
         </dependency>
 
 
-        <!-- ===================== -->
-        <!-- Elasticsearch         -->
-        <!-- ===================== -->
+        <!-- ==================== ELASTICSEARCH ==================== -->
 
         <dependency>
             <groupId>org.elasticsearch</groupId>
@@ -302,9 +269,7 @@
         </dependency>
 
 
-        <!-- ===================== -->
-        <!-- Gson                  -->
-        <!-- ===================== -->
+        <!-- ==================== GSON ==================== -->
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -315,19 +280,13 @@
     </dependencies>
 
 
-    <!-- ========================================================= -->
-    <!-- Build                                                      -->
-    <!-- ========================================================= -->
-
     <build>
 
         <finalName>vprofile-v2</finalName>
 
         <plugins>
 
-            <!-- =============================== -->
-            <!-- Clean Plugin                   -->
-            <!-- =============================== -->
+            <!-- ==================== CLEAN ==================== -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -336,9 +295,7 @@
             </plugin>
 
 
-            <!-- =============================== -->
-            <!-- Resources Plugin               -->
-            <!-- =============================== -->
+            <!-- ==================== RESOURCES ==================== -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -347,9 +304,7 @@
             </plugin>
 
 
-            <!-- =============================== -->
-            <!-- Compiler Plugin                -->
-            <!-- =============================== -->
+            <!-- ==================== COMPILER ==================== -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -358,16 +313,12 @@
 
                 <configuration>
                     <release>${maven.compiler.release}</release>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
 
 
-            <!-- =============================== -->
-            <!-- JaCoCo                         -->
-            <!-- =============================== -->
+            <!-- ==================== JACOCO ==================== -->
 
             <plugin>
                 <groupId>org.jacoco</groupId>
@@ -395,55 +346,16 @@
             </plugin>
 
 
-            <!-- =========================================== -->
-            <!-- Dependency Plugin                          -->
-            <!-- Used to expose Mockito JAR path for agent   -->
-            <!-- =========================================== -->
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.9.0</version>
-
-                <executions>
-                    <execution>
-                        <id>get-dependency-properties</id>
-                        <goals>
-                            <goal>properties</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-
-            <!-- =============================== -->
-            <!-- Surefire                       -->
-            <!-- =============================== -->
+            <!-- ==================== SUREFIRE ==================== -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
-
-                <configuration>
-
-                    <!--
-                        JaCoCo provides @{argLine}.
-                        Mockito 5 uses the inline mock maker.
-                        Explicit Java agent avoids Java 21
-                        dynamic-agent problems.
-                    -->
-                    <argLine>
-                        @{argLine} -javaagent:${org.mockito:mockito-core:jar}
-                    </argLine>
-
-                </configuration>
             </plugin>
 
 
-            <!-- =============================== -->
-            <!-- WAR Plugin                      -->
-            <!-- =============================== -->
+            <!-- ==================== WAR ==================== -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
